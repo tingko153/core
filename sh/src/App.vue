@@ -1,16 +1,37 @@
 <template>
   <div id="app">
-    <List/>
+    <InputForm :add='add' />
+    <List v-bind:listData="listData" />
   </div>
 </template>
 
 <script>
 import List from './components/List'
+import InputForm from './components/InputForm'
+
+const a = [{name: 'test1', no: 0}, {name: 'test2', no: 1}];
 
 export default {
   name: 'App',
+  data() {
+    return {
+      listData: a
+    }
+  },
+  methods: {
+    add(val) {
+        this.listData.push({
+            name: val,
+            no: this.listData.length
+        })
+    },
+    removeItem() {
+      
+    }
+  },
   components: {
-    List
+    List,
+    InputForm
   }
 }
 </script>

@@ -1,20 +1,23 @@
 <template>
   <div>
       <ul>
-          <li v-for="a in listData" :key="a.no"><input type="checkbox" :checked="false" />{{a.name}}</li>
+          <li v-for="(a, index) in listData" :key="a.no" :data-num='a.no'>
+              <input type="checkbox" :checked="false" />{{a.name}}
+              <a href="#" @click='deleted(index)'>삭제</a>
+          </li>
       </ul>
   </div>
 </template>
 
 <script>
-const a = [{name: 'test1', no: 0}, {name: 'test2', no: 1}];
 
 export default {
   name: 'List',
-  data() {
-      return {
-          listData: a
-      }
+  props: ['listData'],
+  methods: {
+    deleted(n) {
+        this.listData.splice(n, 1);
+    },
   }
 }
 </script>
