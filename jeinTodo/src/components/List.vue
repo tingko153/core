@@ -1,18 +1,29 @@
 <template>
   <div class="list">
     <ul>
-      <li v-for="item in items"><label><input type="checkbox" :checked="item.complete" id="`${item.title}`" />{{item.title}}</label></li>
+      <li v-for="item in data"><label><input type="checkbox" :checked="item.complete" v-bind:id="item.key" />{{item.title}}</label>
+        <button v-on:click="editMode" v-bind:id="item.key">수정</button>
+        <button v-on:click="modify" v-bind:id="item.key">수정완료</button>
+        <button v-on:click="remove" v-bind:id="item.key">제거</button>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
-const items = [{title: 'aaaaaaaaaa', complete: false}, {title: 'bbbbbbb', complete: false}, {title: 'abcs', complete: true}];
+
 export default {
   name: 'List',
-  data () {
-    return {
-      items: items
+  props: ["data", "modifyItem", 'removeItem'],
+  methods: {
+    modify(data) {
+      this.modifyItem(data.target.id)
+    },
+    remove(data) {
+      this.removeItem(data.target.id)
+    },
+    editMode() {
+
     }
   }
 }
