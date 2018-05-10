@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="text" v-model='value' /><button @click='add2' >add</button>
+        <input type="text" v-model='value' @keyup.enter='add2'/><button @click='add2' >add</button>
     </div>
 </template>
 
