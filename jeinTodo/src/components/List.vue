@@ -1,9 +1,12 @@
 <template>
   <div class="list">
     <ul>
-      <li v-for="item in data"><label><input type="checkbox" :checked="item.complete" v-bind:id="item.key" />{{item.title}}</label>
-        <button v-on:click="editMode" v-bind:id="item.key">수정</button>
-        <button v-on:click="modify" v-bind:id="item.key">수정완료</button>
+      <li v-for="item in list"><label><input type="checkbox" :checked="item.complete" v-bind:id="item.key" />
+        <span v-if="!editModes[item.key]">{{item.title}}</span>
+        <input ref="title" v-if="editModes[item.key]" type="text" v-model="item.title" />
+        </label>
+        <button v-if="!editModes[item.key]" v-on:click="editMode" v-bind:id="item.key">수정</button>
+        <button v-if="editModes[item.key]" v-on:click="modify" v-bind:id="item.key">수정완료</button>
         <button v-on:click="remove" v-bind:id="item.key">제거</button>
       </li>
     </ul>
@@ -14,16 +17,24 @@
 
 export default {
   name: 'List',
-  props: ["data", "modifyItem", 'removeItem'],
+  props: ["list", "modifyItem", 'removeItem'],
+  data: function () {
+    let uiData = {};
+    this.list.forEach(item => uiData[item.key] = uiData[item.key] || false)
+    return {
+      editModes: uiData
+    }
+  },
   methods: {
     modify(data) {
-      this.modifyItem(data.target.id)
+      this.modifyItem(data.target.id, this.$refs.title[0].value);
+      this.editModes[data.target.id] = false;
     },
     remove(data) {
       this.removeItem(data.target.id)
     },
-    editMode() {
-
+    editMode(data) {
+      this.editModes[data.target.id] = true;
     }
   }
 }
