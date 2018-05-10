@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <List
-      v-bind:data="items"
+      v-bind:list="items"
       v-bind:removeItem="remove"
       v-bind:modifyItem="modify"
     />
