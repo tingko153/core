@@ -2,7 +2,7 @@
   <div id="app">
     <div id="todoList">
       <InputForm :add='add' />
-      <List v-bind:listData="listData" :modify='modify'/>
+      <List v-bind:listData="listData" :modify='modify' />
     </div>
   </div>
 </template>
@@ -11,28 +11,37 @@
 import List from './components/List'
 import InputForm from './components/InputForm'
 
-const a = [{
-            name: 'test1', 
-            no: 0, 
-            modify: false,
-            complete: false
-          }];
+const a = [
+            {
+              name: 'test1', 
+              no: 0, 
+              modify: false,
+              complete: false
+            }
+          ];
 
 export default {
   name: 'App',
+  components: {
+    List,
+    InputForm
+  },
   data() {
     return {
-      listData: a
+      listData: a,
     }
   },
   methods: {
     add(val) {
         const list = this.listData;
+        let n = list[list.length-1] ? list[list.length-1].no + 1 : 0;
+
         if(val) {
           this.listData.push({
               name: val,
-              no: list.length,
-              modify: false
+              no: n,
+              modify: false,
+              complete: false
           });
         }
     },
@@ -40,10 +49,6 @@ export default {
       this.listData[n].modify = (this.listData[n].modify) ? false : true;
     },
   },
-  components: {
-    List,
-    InputForm
-  }
 }
 </script>
 
